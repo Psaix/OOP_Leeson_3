@@ -399,19 +399,19 @@ bool operator>= (const Fraction& f1, const Fraction& f2) {
 
 
 //____________________________________________________________________________________________________________
-//____________________________________________TASK3___________________________________________________________
+//____________________________________________TASK4___________________________________________________________
 //____________________________________________________________________________________________________________
 
 
 class Card {
-private:
-	enum CardSuit {
+public:
+	enum rank : int {
 		HEARTS,
 		DIAMONDS,
 		SPADES,
 		CLUBS
 	};
-	enum CardName {
+	enum suit : char {
 		TWO,
 		THREE,
 		FOUR,
@@ -426,21 +426,26 @@ private:
 		KING,
 		ACE,
 	};
-	enum CardSide : bool {
-		face_up = true,
-		face_down = false
-	};
+
+private:
+	bool m_IsFaceUp;
+	rank m_Rank;
+	suit m_Suit;
+
 public:
 
-	bool Flip(CardSide& side) const {
-		if (side == face_up)
-			return face_down;
+	Card(bool Face, rank Rank, suit Suit) : m_IsFaceUp(Face), m_Rank(Rank), m_Suit(Suit) {}
+
+	bool Flip() {
+		if (m_IsFaceUp)
+			m_IsFaceUp = false;
 		else
-			return face_up;
+			m_IsFaceUp = true;
+		return m_IsFaceUp;
 	}
 
-	int GetValue(CardName& name) const {
-		switch (name) {
+	int GetValue() {
+		switch (m_Suit) {
 		case TWO:
 			return 2;
 			break;
@@ -485,6 +490,7 @@ public:
 		}
 	}
 
+	~Card() {}
 };
 
 
@@ -526,6 +532,15 @@ int main()
 	catch (std::invalid_argument) {
 		std::cout << "Fraction class object - denumerator can't be zero" << std::endl;
 	}
+
+
+
+//______________________________________TASK4__________________________________________________________________
+
+
+
+	Card card(true, Card::rank::SPADES, Card::suit::QUEEN);
+
 
 	return 0;
 }
